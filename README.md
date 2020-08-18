@@ -1,8 +1,8 @@
 # astro-cloud
 
-`astro-cloud` provides three API tiers to access large files from numerous Static Storage Provides. Initial release
+`astro-cloud` provides multiple API tiers to access large files from numerous Static Storage Provides. Initial release
 of this software includes support for loading FITS headers from Amazon Web Services Static Storage Service or an service
-with HTTP loaded onto it
+with HTTP Range header implemented ( Caddy, Nginx, and Apache2 all support the Range header https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Range)
 
 ## Install
 
