@@ -17,6 +17,6 @@ def load_headers(url: str, service: CloudService, payment_solution: PaymentSolut
         return digital_ocean.load_headers(url, payment_solution)
 
     else:
-        raise NotImplementedError(f'Cloud Service[{cloud_service}] not implemented')
+        raise NotImplementedError(f'Cloud Service[{service}] not implemented')
 
 

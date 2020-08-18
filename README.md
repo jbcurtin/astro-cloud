@@ -36,6 +36,9 @@ for header in load_headers(url, CloudService.S3, PaymentSolution.AWSRequestPayer
 
 ```
 
+### Loading Headers from you're own Static Storage Service and not AWS, GCP, Azure, or Digital Ocean
+
+
 ## Dedication to Performance
 
 `astro-cloud` returns as many `astropy` datatypes as possible. Where ever possible everything is kept in memory and
