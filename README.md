@@ -72,7 +72,7 @@ I'll be in the `#fits` channel
 ### FITS Support
 
 We're aware that there are many different ways of loading a FITS file. This package currently offers basic
-support of the fits format. As more issues are discovered, we'll add support for more types of fits files. Please open
+support of the FITS format. As more issues are discovered, we'll add support for more types of FITS files. Please open
 an issue to and include a copy of the data you're testing against and we'll look into adding support for it
 
 ## File Format Specific API Tier
@@ -102,7 +102,7 @@ for header in load_headers(url, CloudService.S3, PaymentSolution.AWSRequestPayer
 
 ```
 
-#### Low Level Cloud API
+### Low Level Cloud API
 
 Downloading a whole FITS file from a Static Storage Provider is possible to. `astro-cloud` uses the HTTP Header `Range`
 to request partial content from a provider or service. We can bypass that by using `psf/requests` instead of `load_headers`.
