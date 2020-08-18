@@ -38,6 +38,22 @@ for header in load_headers(url, CloudService.S3, PaymentSolution.AWSRequestPayer
 
 ### Loading Headers from you're own Static Storage Service and not AWS, GCP, Azure, or Digital Ocean
 
+```
+#!/usr/bin/env python
+
+from astro_cloud.fits.index.base import load_headers
+
+url = 'https://github.com/jbcurtin/astro-cloud/blob/main/astro_cloud_test_data/tess2020061235921-s0022-4-4-0174-s_ffic.fits?raw=true'
+for header in load_headers(url, auth=None):
+    if header.fits.get('SIMPLE', False) is True:
+        header_keys = [key for key in header.fits.keys()]
+        print(f'Primary Header: {len(header_keys)}')
+
+    else:
+        xtension = header.fits['XTENSION']
+        header_keys = [key for key in header.fits.keys()]
+        print(f'{xtension} Header Key Length: {len(header_keys)}')
+```
 
 ## Dedication to Performance
 
@@ -53,6 +69,11 @@ http://astropy-slack-invite.herokuapp.com/
 
 I'll be in the `#fits` channel
 
+### FITS Support
+
+We're aware that there are many different ways of loading a FITS file. This package currently offers basic
+support of the fits format. As more issues are discovered, we'll add support for more types of fits files. Please open
+an issue to and include a copy of the data you're testing against and we'll look into adding support for it
 
 ## File Format Specific API Tier
 

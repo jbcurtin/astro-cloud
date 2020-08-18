@@ -1,8 +1,7 @@
 def test__github():
     from astro_cloud.fits.index.base import load_headers
 
-    url = 'https://github.com/jbcurtin/astro-cloud/blob/main/astro_cloud_test_data/502nmos.fits?raw=true'
-
+    url = 'https://github.com/jbcurtin/astro-cloud/blob/main/astro_cloud_test_data/tess2020061235921-s0022-4-4-0174-s_ffic.fits?raw=true'
     for header in load_headers(url, auth=None):
         if header.fits.get('SIMPLE', False) is True:
             header_keys = [key for key in header.fits.keys()]

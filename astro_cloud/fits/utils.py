@@ -50,7 +50,7 @@ def find_next_header_offset(header: FITSHeader) -> int:
         return header.fits['NAXIS1'] * header.fits['NAXIS2'] + header.offset + header.length
 
     elif header.fits.get('XTENSION', None) in ['TABLE']:
-        raise NotImplementedError
+        raise NotImplementedError('TABLE')
 
     else:
         # import pdb; pdb.set_trace()
