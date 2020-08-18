@@ -24,14 +24,15 @@ have been found
 from astro_cloud.fits import load_headers, CloudService, PaymentSolution
 
 url = 'https://s3.us-east-1.amazonaws.com/stpubdata/tess/public/mast/tess-s0022-4-4-cube.fits'
-for header in load_headers(url, CloudService.AWS, PaymentSolution.AWSRequestPayer):
-    print(header.__class__)
+for header in load_headers(url, CloudService.S3, PaymentSolution.AWSRequestPayer):
     if header.fits.get('SIMPLE', False) is True:
-        print('Primary Header: {header}')
+        header_keys = [key for key in header.fits.keys()]
+        print(f'Primary Header: {len(header_keys)}')
 
     else:
         xtension = header.fits['XTENSION']
-        print('{xtension} Header: {header}')
+        header_keys = [key for key in header.fits.keys()]
+        print(f'{xtension} Header Key Length: {len(header_keys)}')
 
 ```
 
@@ -72,7 +73,7 @@ Lets load headers from a FITS file on AWS S3 inside the bucket `stpubdata`
 from astro_cloud.fits import load_headers, CloudService, PaymentSolution
 
 url = 'https://s3.us-east-1.amazonaws.com/stpubdata/tess/public/mast/tess-s0022-4-4-cube.fits'
-for header in load_headers(url, CloudService.AWS, PaymentSolution.AWSRequestPayer):
+for header in load_headers(url, CloudService.S3, PaymentSolution.AWSRequestPayer):
     print(header.fits.get('XTENSION'))
 
 ```
@@ -83,6 +84,8 @@ Downloading a whole FITS file from a Static Storage Provider is possible to. `as
 to request partial content from a provider or service. We can bypass that by using `psf/requests` instead of `load_headers`.
 
 ```
+#!/usr/bin/env python
+import os
 import requests
 
 from astro_cloud.auth.aws import AWSAuth
@@ -91,26 +94,25 @@ from astropy.io import fits
 
 CHUNK_SIZE = 1024
 ENCODING = 'utf-8'
-url = 'https://s3.us-east-1.amazonaws.com/datum-storage.org/fits-files/502nmos.fits'
+url = 'https://s3.amazonaws.com/datum-storage.org/fits-files/502nmos.fits'
 filename = os.path.basename(url)
 filepath = f'/tmp/{filename}'
 
 response = requests.get(url, auth=AWSAuth(request_payer=True), headers={
-    'Range': '0-2779',
+    'Range': 'bytes=0-2779',
 })
-assert response.status_code in [200, 204]
+assert response.status_code == 206
 
-primary_header = fits.Header.from_string(response.content.decode(ENCODING))
-print(primary_header)
-
+primary_header = fits.Header.fromstring(response.content.decode(ENCODING))
+assert primary_header['SIMPLE'] is True
 
 # Save the file to the file-system and load it with `fits.io`
-streaming_response = request.get(url, auth=AWSAuth(request_payer=True), headers={}, stream=True)
+streaming_response = requests.get(url, auth=AWSAuth(request_payer=True), headers={}, stream=True)
+assert streaming_response.status_code == 200
 with open(filepath, 'wb') as file_stream:
     for part in streaming_response.iter_content(CHUNK_SIZE):
         file_stream.write(part)
 
 fits_file = fits.open(filepath)
-print(fits_file)
-
+print(fits_file.info())
 ```
