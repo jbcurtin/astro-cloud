@@ -63,22 +63,22 @@ cluster computing frameworks such as DASK and Python `mulitprocessing` module.
 
 ## Maintenance
 
-Please feel welcome to open a conversation with me on `astropy` slack channel and tell me how you'd like to use this package!
+Please feel welcome to open a conversation with us on `astropy` slack channel and tell me how you'd like to use this package!
 
 http://astropy-slack-invite.herokuapp.com/
 
-I'll be in the `#fits` channel
+We'll be in the `#fits` channel
 
 ### FITS Support
 
 We're aware that there are many different ways of loading a FITS file. This package currently offers basic
 support of the FITS format. As more issues are discovered, we'll add support for more types of FITS files. Please open
-an issue to and include a copy of the data you're testing against and we'll look into adding support for it
+an issue and include a copy of the data you're testing against. We'll look into adding support for it
 
 ## File Format Specific API Tier
 
-`astro-cloud` three API tiers provides access to perform complex operations on files being accessed from a Static Service Provider.
-The highest being an implemantion of authentication layers for all major Static Storage Provides.
+`astro-cloud` multiple API tiers provides access to perform complex operations on files being accessed from a Static Service Provider.
+The highest tier being an implemantion of authentication layers for all major Static Storage Provides
 
 * Amazon Web Services: Simple Storage Service ( AWS: S3 )
 * Digital Ocean: Spaces ( Spaces by Digital Ocean ) [ planned support ]
@@ -104,8 +104,9 @@ for header in load_headers(url, CloudService.S3, PaymentSolution.AWSRequestPayer
 
 ### Low Level Cloud API
 
-Downloading a whole FITS file from a Static Storage Provider is possible to. `astro-cloud` uses the HTTP Header `Range`
-to request partial content from a provider or service. We can bypass that by using `psf/requests` instead of `load_headers`.
+Of the multiple API tiers, the lowest tier is Low Level Cloud API. Downloading a whole FITS file from a Static Storage
+Provider is possible by using `psf/requests` or passing an `AuthBase` into a different `load_headers`. Underneath everything
+`astro-cloud` uses the HTTP Header `Range` to request partial content from a provider or service
 
 ```
 #!/usr/bin/env python
