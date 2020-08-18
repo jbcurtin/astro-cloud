@@ -1,0 +1,3 @@
+BLOCK_SIZE = 2880
+END_CARD = 'END' + ' ' * 77
+ENCODING = 'utf-8'

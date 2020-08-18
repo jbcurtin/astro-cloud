@@ -1,0 +1,2 @@
+astro_cloud_test_data/502nmos.fits filter=lfs diff=lfs merge=lfs -text
+astro_cloud_test_data/tess-s0022-4-4-cube-headers.json filter=lfs diff=lfs merge=lfs -text
